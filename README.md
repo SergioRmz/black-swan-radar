@@ -50,3 +50,20 @@ mvn test
 
 - The project is configured for Java 21 (`<java.version>21</java.version>` in `pom.xml`).
 - If your environment is using a lower JDK version, Maven build and tests will fail with: `release version 21 not supported`.
+
+## Development container
+
+This repository includes a Dev Container config in `.devcontainer/devcontainer.json` so you can work without installing Java/Maven locally.
+
+Included in the container:
+
+- Java 21 + Maven
+- Docker socket mount for Testcontainers (`/var/run/docker.sock`)
+- Recommended VS Code extensions for Java/Spring
+
+How to use it:
+
+1. Install Docker Desktop (or Docker Engine) and VS Code.
+2. Install the VS Code extension `Dev Containers`.
+3. Open the repository in VS Code.
+4. Run `Dev Containers: Reopen in Container`.
