@@ -59,7 +59,9 @@ Included in the container:
 
 - Java 21 + Maven
 - Docker socket mount for Testcontainers (`/var/run/docker.sock`)
+- OpenCode credentials mount from host (`~/.config/opencode` -> `/root/.config/opencode`)
 - Recommended VS Code extensions for Java/Spring
+- Post-create automation via `.devcontainer/setup.sh`
 
 How to use it:
 
@@ -67,3 +69,11 @@ How to use it:
 2. Install the VS Code extension `Dev Containers`.
 3. Open the repository in VS Code.
 4. Run `Dev Containers: Reopen in Container`.
+
+The post-create setup script performs:
+
+- Install missing base tools when needed (`maven`, `curl`)
+- Disable broken third-party APT repos that can block updates (e.g. `dl.yarnpkg.com` with missing keys)
+- Maven validation (`mvn -v`)
+- Maven dependency warmup (`mvn -DskipTests dependency:go-offline`)
+- OpenCode installation (`curl -fsSL https://opencode.ai/install | bash`)
