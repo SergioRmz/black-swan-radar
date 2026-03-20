@@ -64,17 +64,26 @@ Included in the container:
 - Recommended VS Code extensions for Java/Spring
 - Post-create automation via `.devcontainer/setup.sh`
 
+Environment files:
+
+- App variables: `/.env` (template: `/.env.example`)
+- Devcontainer/Postgres variables: `/.devcontainer/.env` (template: `/.devcontainer/.env.example`)
+
 How to use it:
 
 1. Install Docker Desktop (or Docker Engine) and VS Code.
 2. Install the VS Code extension `Dev Containers`.
-3. Open the repository in VS Code.
-4. Run `Dev Containers: Reopen in Container`.
+3. Create local env files:
+   - `cp .env.example .env`
+   - `cp .devcontainer/.env.example .devcontainer/.env`
+4. Open the repository in VS Code.
+5. Run `Dev Containers: Reopen in Container`.
 
 The post-create setup script performs:
 
 - Maven validation (`mvn -v`)
 - Docker CLI validation (`docker --version`)
+- Docker Compose v2 validation (`docker compose version`)
 - Curl validation (`curl --version`)
 - Maven dependency warmup (`mvn -DskipTests dependency:go-offline`)
 - OpenCode installation (`curl -fsSL https://opencode.ai/install | bash`)

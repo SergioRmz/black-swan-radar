@@ -37,3 +37,7 @@ target/
 
 # OS
 .DS_Store
+
+# Environment
+.env
+.devcontainer/.env

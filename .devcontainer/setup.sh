@@ -5,6 +5,7 @@ set -euo pipefail
 echo "[setup] Verificando herramientas"
 mvn -v
 docker --version
+docker compose version
 curl --version
 
 echo "[setup] Descargando dependencias Maven"

@@ -8,15 +8,13 @@ services:
     volumes:
       - ..:/workspace:cached
       - black-swan-radar-m2:/root/.m2
+    env_file:
+      - ../.env
+      - ./.env
     working_dir: /workspace
     command: sleep infinity
     environment:
-      DB_HOST: postgres
-      DB_PORT: "5432"
-      DB_NAME: black_swan_radar
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DOCKER_HOST: unix:///var/run/docker.sock
+      DOCKER_HOST: ${DOCKER_HOST:-unix:///var/run/docker.sock}
     depends_on:
       postgres:
         condition: service_healthy
@@ -25,16 +23,18 @@ services:
     image: postgres:16
     container_name: black-swan-radar-postgres
     restart: unless-stopped
+    env_file:
+      - ./.env
     environment:
-      POSTGRES_DB: black_swan_radar
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${POSTGRES_DB:-black_swan_radar}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d black_swan_radar"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-black_swan_radar}"]
       interval: 10s
       timeout: 5s
       retries: 5
