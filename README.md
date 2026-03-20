@@ -57,7 +57,8 @@ This repository includes a Dev Container config in `.devcontainer/devcontainer.j
 
 Included in the container:
 
-- Java 21 + Maven
+- Java 21 + Maven from custom image (`.devcontainer/Dockerfile`)
+- Docker CLI available inside the container
 - Docker socket mount for Testcontainers (`/var/run/docker.sock`)
 - OpenCode credentials mount from host (`~/.config/opencode` -> `/root/.config/opencode`)
 - Recommended VS Code extensions for Java/Spring
@@ -72,8 +73,8 @@ How to use it:
 
 The post-create setup script performs:
 
-- Install missing base tools when needed (`maven`, `curl`)
-- Disable broken third-party APT repos that can block updates (e.g. `dl.yarnpkg.com` with missing keys)
 - Maven validation (`mvn -v`)
+- Docker CLI validation (`docker --version`)
+- Curl validation (`curl --version`)
 - Maven dependency warmup (`mvn -DskipTests dependency:go-offline`)
 - OpenCode installation (`curl -fsSL https://opencode.ai/install | bash`)

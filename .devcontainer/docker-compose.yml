@@ -1,6 +1,8 @@
 services:
   app:
-    image: mcr.microsoft.com/devcontainers/java:1-21-bookworm
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
     container_name: black-swan-radar-app
     restart: unless-stopped
     volumes:

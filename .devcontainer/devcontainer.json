@@ -7,8 +7,7 @@
   "shutdownAction": "stopCompose",
   "mounts": [
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
-    // Mount the OpenCode directory from the host to the container to allow access to the OpenCode CLI and its configurations
-    "source=${localEnv:HOME}/.local/share/opencode,target=/root/.local/share/opencode,type=bind,consistency=cached"
+    "source=${localEnv:HOME}/.config/opencode,target=/root/.config/opencode,type=bind,consistency=cached"
   ],
   "customizations": {
     "vscode": {
