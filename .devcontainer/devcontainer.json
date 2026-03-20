@@ -1,13 +1,15 @@
 {
   "name": "black-swan-radar",
-  "image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "runServices": ["app", "postgres"],
+  "shutdownAction": "stopCompose",
   "mounts": [
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+    // Mount the OpenCode directory from the host to the container to allow access to the OpenCode CLI and its configurations
     "source=${localEnv:HOME}/.local/share/opencode,target=/root/.local/share/opencode,type=bind,consistency=cached"
   ],
-  "containerEnv": {
-    "DOCKER_HOST": "unix:///var/run/docker.sock"
-  },
   "customizations": {
     "vscode": {
       "extensions": [

@@ -1,0 +1,41 @@
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/java:1-21-bookworm
+    container_name: black-swan-radar-app
+    restart: unless-stopped
+    volumes:
+      - ..:/workspace:cached
+    working_dir: /workspace
+    command: sleep infinity
+    environment:
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_NAME: black_swan_radar
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DOCKER_HOST: unix:///var/run/docker.sock
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16
+    container_name: black-swan-radar-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: black_swan_radar
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d black_swan_radar"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  postgres_data:
