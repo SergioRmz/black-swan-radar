@@ -40,4 +40,6 @@ target/
 
 # Environment
 .env
-.devcontainer/.env
+
+# Local helper scripts (not versioned)
+scripts/local/

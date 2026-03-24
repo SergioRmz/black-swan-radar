@@ -60,14 +60,33 @@ Included in the container:
 - Java 21 + Maven from custom image (`.devcontainer/Dockerfile`)
 - Docker CLI available inside the container
 - Docker socket mount for Testcontainers (`/var/run/docker.sock`)
-- OpenCode credentials mount from host (`~/.config/opencode` -> `/root/.config/opencode`)
+- OpenCode credentials mount from host (`~/.local/share/opencode` -> `/root/.local/share/opencode`)
 - Recommended VS Code extensions for Java/Spring
 - Post-create automation via `.devcontainer/setup.sh`
 
 Environment files:
 
-- App variables: `/.env` (template: `/.env.example`)
-- Devcontainer/Postgres variables: `/.devcontainer/.env` (template: `/.devcontainer/.env.example`)
+- App + Devcontainer variables: `/.env` (template: `/.env.example`)
+
+Variable naming notes:
+
+- The application reads `DB_*` variables from `/.env`.
+- PostgreSQL reads `POSTGRES_*` variables from the same `/.env` file.
+
+## Flyway
+
+- Migrations are stored in `src/main/resources/db/migration`.
+- Versioned scripts follow: `V<version>__<description>.sql`.
+- The Maven Flyway plugin is configured in `pom.xml`.
+- By default, plugin commands target local PostgreSQL (`localhost:5432`, `black_swan_radar`, `postgres/postgres`).
+- If `DB_HOST` is present in the environment (for example inside the devcontainer), plugin commands automatically use `DB_*` variables.
+
+Useful commands:
+
+```bash
+mvn flyway:info
+mvn flyway:migrate
+```
 
 How to use it:
 
@@ -75,7 +94,6 @@ How to use it:
 2. Install the VS Code extension `Dev Containers`.
 3. Create local env files:
    - `cp .env.example .env`
-   - `cp .devcontainer/.env.example .devcontainer/.env`
 4. Open the repository in VS Code.
 5. Run `Dev Containers: Reopen in Container`.
 
