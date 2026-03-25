@@ -68,6 +68,12 @@ Environment files:
 
 - App + Devcontainer variables: `/.env` (template: `/.env.example`)
 
+Export helper script:
+
+- Versioned script: `scripts/export-env.sh`
+- Load variables into current shell: `source scripts/export-env.sh`
+- Optional custom file: `source scripts/export-env.sh path/to/.env`
+
 Variable naming notes:
 
 - The application reads `DB_*` variables from `/.env`.
